@@ -1,6 +1,6 @@
 import { browser, by, element } from 'protractor';
 
-export class Angular4MongoDBPage {
+export class EmployeeManagmentPage {
   navigateTo() {
     return browser.get('/');
   }

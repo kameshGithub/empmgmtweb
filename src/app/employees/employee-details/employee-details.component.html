@@ -1,4 +1,5 @@
-<div *ngIf="employee">
+<div *ngIf="employee" >
+   <div id="detailsMode" *ngIf="!isEditMode">
 	<div>
 		<label>Name: </label> {{employee.firstName +' '+ employee.middleInitial + ' ' + employee.lastName}}
 	</div>
@@ -9,18 +10,16 @@
 		<label>Date of Employment: </label> {{employee.dateOfEmployment}}
 	</div>
 	<div>
-		<label>Active: </label><input type="checkbox" value={{employee.status}}/>
+		<label>Active: </label><input type="checkbox" class="form-control" disabled id="status" required [(ngModel)]="employee.status" name="status">
 	</div>
-	<div class="form-group">
-		<label for="status">Active</label> <input type="checkbox"
-			class="form-control" id="status" required [(ngModel)]="employee.status"
-			name="status">
-	</div>
-	<span class="button is-small btn-primary" *ngIf='employee.status' (click)='updateStatus(false)'>Inactive</span>
-
-	<span class="button is-small btn-primary" *ngIf='!employee.status' (click)='updateStatus(true)'>Active</span>
-
-	<span class="button is-small btn-danger" (click)='deleteEmployee()'>Delete</span>
-
+   </div>
+   <div id="editMode">
+		<create-employee [mode]='2' [employee]='employee' (toUpdate)="update($event)" *ngIf="isEditMode"></create-employee>
+   </div>	
+	<a class="btn btn-primary active" (click)='editToggle()' *ngIf="!isEditMode" role="button">edit</a>
+	<a class="btn btn-primary active" (click)='editToggle()' *ngIf="isEditMode" role="button">cancel</a>
+	<!--	<a routerLink="edit" class="btn btn-primary active" role="button" routerLinkActive="active">Edit</a> !-->
+	<a class="btn btn-primary disabled" (click)='update()' role="button">Update</a>
+	<a class="btn btn-danger active" (click)='delete()' role="button">Delete</a>
 	<hr/>
 </div>

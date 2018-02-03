@@ -27,6 +27,10 @@ export class EmployeeService {
     return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
   }
 
+  deleteByDeactivateEmployee(id: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'json' });
+  }
+
   getEmployeesList(all:boolean): Observable<any> {
     if(all)
       return this.http.get(`${this.baseUrl}` + '/all');

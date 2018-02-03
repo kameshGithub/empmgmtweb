@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: 'allemployees', component: EmployeesListComponent, data: {fetchAll:true} },
   { path: 'employees', component: EmployeesListComponent },
   { path: 'add', component: CreateEmployeeComponent },
+  { path: 'allemployees/edit', component: CreateEmployeeComponent}
 ];
 
 @NgModule({

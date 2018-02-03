@@ -14,33 +14,45 @@ import { EmployeeMappingUtil } from '../employeeMappingUtil';
 export class EmployeeDetailsComponent implements OnInit {
 
   @Input() employee: any;
+  isEditMode:boolean = false;
 
   constructor(private employeeService: EmployeeService, private listComponent: EmployeesListComponent) { 
-    console.log("emp",this.employee);
+
   }
   ngOnInit() {
-    console.log("ngOnInit");
     this.employee = EmployeeMappingUtil.getViewModelFromModel(this.employee);
   }
-
-  updateStatus(isActive: boolean) {
+  editToggle(){   
+      this.isEditMode = this.isEditMode?false:true;
+      this.employee = EmployeeMappingUtil.getViewModelFromModel(this.employee);
+  }
+  update(employee) {
+    if(employee!=null){
+      this.employee = employee;
+    }
     this.employeeService.updateEmployee(this.employee.id,
-      { 
-        firstName: this.employee.firstName,
-        lastName: this.employee.lastName,
-        middleInitial: this.employee.middleInitial,
-        dateOfBirth: this.employee.dateOfBirth,
-        dateOfEmployment: this.employee.dateOfEmployment,
-        status: isActive
-      }).subscribe(
+      EmployeeMappingUtil.getModelFromViewModel(this.employee)).subscribe(
       data => {
         console.log(data);
         this.employee = data as Employee;
       },
       error => console.log(error));
   }
-
-  deleteEmployee() {
+  delete(){
+    this.deleteByUpdateStatus();
+  }
+  private deleteByUpdateStatus() {  
+    this.employeeService.deleteByDeactivateEmployee(this.employee.id)
+    .subscribe(
+      data => {
+        console.log(data);
+        //this.employee = data as Employee;
+        this.employee = null;
+      },
+      error => console.log(error));
+  }
+  
+  deleteActual() {
     this.employeeService.deleteEmployee(this.employee.id)
       .subscribe(
       data => {

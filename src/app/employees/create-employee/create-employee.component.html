@@ -1,3 +1,4 @@
+<div id="createOrEditEmployee" [hidden]="mode==3">
 <h3>Create Employee</h3>
 <div [hidden]="submitted" style="width: 300px;">
 	<form (ngSubmit)="onSubmit()">
@@ -35,10 +36,12 @@
 		</div>
 
 		<button type="submit" class="btn btn-success">Submit</button>
+		<button type="button" *ngIf='mode==1' class="btn btn-primary" (click)="cancel()">Cancel</button>
+		
 	</form>
 </div>
-
-<div [hidden]="!submitted">
-	<h4>You submitted successfully!</h4>
-	<button class="btn btn-success" (click)="newEmployee()">Add</button>
+	<div [hidden]="!submitted" *ngIf='mode==1'>
+		<h4>You submitted successfully!</h4>
+		<button class="btn btn-success" (click)="newEmployee()">Add</button>
+	</div>	
 </div>

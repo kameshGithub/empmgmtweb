@@ -23,7 +23,7 @@ export class EmployeesListComponent implements OnInit {
   ngOnInit() {
     this.reloadData();
   }
-
+  
   deleteEmployees() {
     this.employeeService.deleteAll()
       .subscribe(

@@ -1,10 +1,10 @@
-import { Angular4MongoDBPage } from './app.po';
+import { EmployeeManagmentPage } from './app.po';
 
-describe('angular4-mongodb App', () => {
-  let page: Angular4MongoDBPage;
+describe('EmpMgmt App', () => {
+  let page: EmployeeManagmentPage;
 
   beforeEach(() => {
-    page = new Angular4MongoDBPage();
+    page = new EmployeeManagmentPage();
   });
 
   it('should display welcome message', done => {
