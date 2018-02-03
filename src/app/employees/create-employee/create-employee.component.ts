@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Location } from '@angular/common';
 import { Employee } from '../employee';
 import { EmployeeService } from '../employee.service';
-import { EmployeeMappingUtil } from '../employeeMappingUtil';
+//import { EmployeeMappingUtil } from '../employeeMappingUtil';
 
 @Component({
   selector: 'create-employee',
@@ -30,9 +30,10 @@ export class CreateEmployeeComponent implements OnInit {
     this.employee = new Employee();
   }
   save() {
-    this.employeeService.createEmployee(EmployeeMappingUtil.getModelFromViewModel(this.employee))
+    this.employeeService.createEmployee(this.employee)
       .subscribe(data => console.log(data), error => console.log(error));
     this.employee = new Employee();
+    this._location.back();
   }  
   onSubmit() {
     this.submitted = true;
@@ -44,8 +45,7 @@ export class CreateEmployeeComponent implements OnInit {
       this.toUpdate.emit(this.employee);
     } 
   }
-  cancel(){
-    
+cancel(){    
     this.mode=3;
     this.action.emit(this.mode);
     this._location.back();

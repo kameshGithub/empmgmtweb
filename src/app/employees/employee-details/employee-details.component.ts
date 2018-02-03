@@ -19,25 +19,33 @@ export class EmployeeDetailsComponent implements OnInit {
   constructor(private employeeService: EmployeeService, private listComponent: EmployeesListComponent) { 
 
   }
+  
+  /**
+   * TO set the passed in object on initialization in edit mode
+   */
   ngOnInit() {
-    this.employee = EmployeeMappingUtil.getViewModelFromModel(this.employee);
+    this.employee = EmployeeMappingUtil.formateData(this.employee);
   }
-  editToggle(){   
+  /**
+   * To change the mode from edit-create-cancel
+   */
+  editOrCancel(){
       this.isEditMode = this.isEditMode?false:true;
-      this.employee = EmployeeMappingUtil.getViewModelFromModel(this.employee);
   }
+  /**
+   * 
+   * @param employee 
+   */
   update(employee) {
-    if(employee!=null){
-      this.employee = employee;
-    }
-    this.employeeService.updateEmployee(this.employee.id,
-      EmployeeMappingUtil.getModelFromViewModel(this.employee)).subscribe(
+    this.editOrCancel();
+    this.employeeService.updateEmployee(this.employee.id,this.employee).subscribe(
       data => {
         console.log(data);
-        this.employee = data as Employee;
+        this.employee = EmployeeMappingUtil.formateData(data as Employee);
       },
       error => console.log(error));
   }
+  /** Delete employee by changing the status from ACTIVE to INACTIVE */
   delete(){
     this.deleteByUpdateStatus();
   }

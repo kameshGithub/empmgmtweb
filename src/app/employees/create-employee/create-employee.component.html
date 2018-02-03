@@ -20,22 +20,23 @@
 		<div class="form-group">
 			<label for="dateOfBirth">Date of Birth</label> <input type="date"
 				class="form-control" id="dateOfBirth" required [(ngModel)]="employee.dateOfBirth"
-				name="dateOfBirth">
+				name="dateOfBirth" value="{{employee.dateOfBirth}}">
 		</div>
 
 		<div class="form-group">
 			<label for="dateOfEmployment">Date Of Employement</label> <input type="date"
 				class="form-control" id="dateOfEmployment" required [(ngModel)]="employee.dateOfEmployment"
-				name="dateOfEmployment">
+				name="dateOfEmployment" value={{employee.dateOfEmployment}}>
 		</div>
-
+		<!--
 		<div class="form-group">
 			<label for="status">Active</label> <input type="checkbox"
 				class="form-control" id="status" required [(ngModel)]="employee.status"
 				name="status">
 		</div>
-
-		<button type="submit" class="btn btn-success">Submit</button>
+		-->
+		<button type="submit" *ngIf='mode==2' class="btn btn-success">Update</button>
+		<button type="submit" *ngIf='mode==1' class="btn btn-success">Submit</button>
 		<button type="button" *ngIf='mode==1' class="btn btn-primary" (click)="cancel()">Cancel</button>
 		
 	</form>

@@ -40,5 +40,13 @@ export class EmployeeMappingUtil {
     vmEmployee.dateOfEmployment = mEmployee.doj!=null?new Date(mEmployee.doj).toDateString():"Date not provided!!!";
     vmEmployee.status = mEmployee.status==="ACTIVE"?true:false;
     return vmEmployee;
-  }  
+  } 
+  public static formateData(employee:Employee){
+    if(employee==null){
+      return new Employee();
+    }
+    employee.dateOfBirth = employee.dateOfBirth!=null?new Date(employee.dateOfBirth).toISOString().substr(0, 10):"Date not provided!";
+    employee.dateOfEmployment = employee.dateOfEmployment!=null?new Date(employee.dateOfEmployment).toISOString().substr(0, 10):"Date not provided!";
+    return employee;
+  }
 }
