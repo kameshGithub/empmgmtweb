@@ -1,0 +1,403 @@
+From 57a147d4dc2afed4df6f1f20c7ac4e684937c7f7 Mon Sep 17 00:00:00 2001
+From: kameshGithub <kamesh.chauhan@gmail.com>
+Date: Sat, 3 Feb 2018 19:57:26 +0530
+Subject: [PATCH] working
+
+---
+ .angular-cli.json                                  | 57 ++++++++++++++++++++++
+ e2e/app.e2e-spec.ts                                |  8 +--
+ e2e/app.po.ts                                      |  2 +-
+ package-lock.json                                  |  2 +-
+ package.json                                       |  2 +-
+ src/app/app-routing.module.ts                      |  1 +
+ .../create-employee/create-employee.component.html | 13 +++--
+ .../create-employee/create-employee.component.ts   | 36 +++++++++-----
+ .../employee-details.component.css                 |  4 ++
+ .../employee-details.component.html                | 25 +++++-----
+ .../employee-details/employee-details.component.ts | 40 +++++++++------
+ src/app/employees/employee.service.ts              |  4 ++
+ .../employees-list/employees-list.component.ts     |  2 +-
+ src/index.html                                     |  2 +-
+ 14 files changed, 146 insertions(+), 52 deletions(-)
+ create mode 100644 .angular-cli.json
+
+diff --git a/.angular-cli.json b/.angular-cli.json
+new file mode 100644
+index 0000000..ffa216a
+--- /dev/null
++++ b/.angular-cli.json
+@@ -0,0 +1,57 @@
++{
++  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
++  "project": {
++    "name": "EmpMgmtWeb"
++  },
++  "apps": [
++    {
++      "root": "src",
++      "outDir": "dist",
++      "assets": [
++        "assets",
++        "favicon.ico"
++      ],
++      "index": "index.html",
++      "main": "main.ts",
++      "polyfills": "polyfills.ts",
++      "test": "test.ts",
++      "tsconfig": "tsconfig.app.json",
++      "testTsconfig": "tsconfig.spec.json",
++      "prefix": "app",
++      "styles": [
++        "styles.css"
++      ],
++      "scripts": [],
++      "environmentSource": "environments/environment.ts",
++      "environments": {
++        "dev": "environments/environment.ts",
++        "prod": "environments/environment.prod.ts"
++      }
++    }
++  ],
++  "e2e": {
++    "protractor": {
++      "config": "./protractor.conf.js"
++    }
++  },
++  "lint": [
++    {
++      "project": "src/tsconfig.app.json"
++    },
++    {
++      "project": "src/tsconfig.spec.json"
++    },
++    {
++      "project": "e2e/tsconfig.e2e.json"
++    }
++  ],
++  "test": {
++    "karma": {
++      "config": "./karma.conf.js"
++    }
++  },
++  "defaults": {
++    "styleExt": "css",
++    "component": {}
++  }
++}
+diff --git a/e2e/app.e2e-spec.ts b/e2e/app.e2e-spec.ts
+index b9b696e..8030fb9 100644
+--- a/e2e/app.e2e-spec.ts
++++ b/e2e/app.e2e-spec.ts
+@@ -1,10 +1,10 @@
+-import { Angular4MongoDBPage } from './app.po';
++import { EmployeeManagmentPage } from './app.po';
+ 
+-describe('angular4-mongodb App', () => {
+-  let page: Angular4MongoDBPage;
++describe('EmpMgmt App', () => {
++  let page: EmployeeManagmentPage;
+ 
+   beforeEach(() => {
+-    page = new Angular4MongoDBPage();
++    page = new EmployeeManagmentPage();
+   });
+ 
+   it('should display welcome message', done => {
+diff --git a/e2e/app.po.ts b/e2e/app.po.ts
+index fa492f7..5a529e7 100644
+--- a/e2e/app.po.ts
++++ b/e2e/app.po.ts
+@@ -1,6 +1,6 @@
+ import { browser, by, element } from 'protractor';
+ 
+-export class Angular4MongoDBPage {
++export class EmployeeManagmentPage {
+   navigateTo() {
+     return browser.get('/');
+   }
+diff --git a/package-lock.json b/package-lock.json
+index 3cb9a62..db7f9da 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -1,5 +1,5 @@
+ {
+-  "name": "angular4-mongodb",
++  "name": "EmpMgmtWeb",
+   "version": "0.0.0",
+   "lockfileVersion": 1,
+   "requires": true,
+diff --git a/package.json b/package.json
+index 3876ac4..124edf0 100644
+--- a/package.json
++++ b/package.json
+@@ -1,5 +1,5 @@
+ {
+-  "name": "angular4-mongodb",
++  "name": "EmpMgmt",
+   "version": "0.0.0",
+   "license": "MIT",
+   "scripts": {
+diff --git a/src/app/app-routing.module.ts b/src/app/app-routing.module.ts
+index e067b8e..2e09d2a 100644
+--- a/src/app/app-routing.module.ts
++++ b/src/app/app-routing.module.ts
+@@ -9,6 +9,7 @@ const routes: Routes = [
+   { path: 'allemployees', component: EmployeesListComponent, data: {fetchAll:true} },
+   { path: 'employees', component: EmployeesListComponent },
+   { path: 'add', component: CreateEmployeeComponent },
++  { path: 'allemployees/edit', component: CreateEmployeeComponent}
+ ];
+ 
+ @NgModule({
+diff --git a/src/app/employees/create-employee/create-employee.component.html b/src/app/employees/create-employee/create-employee.component.html
+index 3113a7a..8e2cb0a 100644
+--- a/src/app/employees/create-employee/create-employee.component.html
++++ b/src/app/employees/create-employee/create-employee.component.html
+@@ -1,3 +1,4 @@
++<div id="createOrEditEmployee" [hidden]="mode==3">
+ <h3>Create Employee</h3>
+ <div [hidden]="submitted" style="width: 300px;">
+ 	<form (ngSubmit)="onSubmit()">
+@@ -35,10 +36,12 @@
+ 		</div>
+ 
+ 		<button type="submit" class="btn btn-success">Submit</button>
++		<button type="button" *ngIf='mode==1' class="btn btn-primary" (click)="cancel()">Cancel</button>
++		
+ 	</form>
+ </div>
+-
+-<div [hidden]="!submitted">
+-	<h4>You submitted successfully!</h4>
+-	<button class="btn btn-success" (click)="newEmployee()">Add</button>
+-</div>
++	<div [hidden]="!submitted" *ngIf='mode==1'>
++		<h4>You submitted successfully!</h4>
++		<button class="btn btn-success" (click)="newEmployee()">Add</button>
++	</div>	
++</div>
+\ No newline at end of file
+diff --git a/src/app/employees/create-employee/create-employee.component.ts b/src/app/employees/create-employee/create-employee.component.ts
+index ba384c7..5c428a7 100644
+--- a/src/app/employees/create-employee/create-employee.component.ts
++++ b/src/app/employees/create-employee/create-employee.component.ts
+@@ -1,6 +1,6 @@
+-import { Component, OnInit } from '@angular/core';
++import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+ import { FormsModule } from '@angular/forms';
+-
++import { Location } from '@angular/common';
+ import { Employee } from '../employee';
+ import { EmployeeService } from '../employee.service';
+ import { EmployeeMappingUtil } from '../employeeMappingUtil';
+@@ -12,28 +12,42 @@ import { EmployeeMappingUtil } from '../employeeMappingUtil';
+ })
+ export class CreateEmployeeComponent implements OnInit {
+ 
+-  employee: Employee = new Employee();
++  @Input() employee: Employee = new Employee();;
+   submitted = false;
++  @Input() mode = 1; // 1=credit, 2=edit, 3=canceled
++  @Output() empCreated = new EventEmitter<Employee>();
++  @Output() toUpdate = new EventEmitter<Employee>();
++  @Output() action = new EventEmitter<Number>();
+ 
+-  constructor(private employeeService: EmployeeService) { }
+-
+-  ngOnInit() {
++  constructor(private _location: Location, private employeeService: EmployeeService) { 
++         
+   }
+ 
++  ngOnInit() { }
++
+   newEmployee(): void {
+     this.submitted = false;
+     this.employee = new Employee();
+   }
+-
+   save() {
+-    //this.employee.status = "ACTIVE";
+     this.employeeService.createEmployee(EmployeeMappingUtil.getModelFromViewModel(this.employee))
+       .subscribe(data => console.log(data), error => console.log(error));
+     this.employee = new Employee();
+-  }
+-  
++  }  
+   onSubmit() {
+     this.submitted = true;
+-    this.save();
++    if(this.mode==1){
++      this.save();      
++      this.empCreated.emit(this.employee);
++    }else{
++      this.mode=2;      
++      this.toUpdate.emit(this.employee);
++    } 
++  }
++  cancel(){
++    
++    this.mode=3;
++    this.action.emit(this.mode);
++    this._location.back();
+   }
+ }
+diff --git a/src/app/employees/employee-details/employee-details.component.css b/src/app/employees/employee-details/employee-details.component.css
+index e69de29..a617a5d 100644
+--- a/src/app/employees/employee-details/employee-details.component.css
++++ b/src/app/employees/employee-details/employee-details.component.css
+@@ -0,0 +1,4 @@
++.form-control {
++    color: red;
++    width: 20px;
++}
+\ No newline at end of file
+diff --git a/src/app/employees/employee-details/employee-details.component.html b/src/app/employees/employee-details/employee-details.component.html
+index 1ce5049..c303d2c 100644
+--- a/src/app/employees/employee-details/employee-details.component.html
++++ b/src/app/employees/employee-details/employee-details.component.html
+@@ -1,4 +1,5 @@
+-<div *ngIf="employee">
++<div *ngIf="employee" >
++   <div id="detailsMode" *ngIf="!isEditMode">
+ 	<div>
+ 		<label>Name: </label> {{employee.firstName +' '+ employee.middleInitial + ' ' + employee.lastName}}
+ 	</div>
+@@ -9,18 +10,16 @@
+ 		<label>Date of Employment: </label> {{employee.dateOfEmployment}}
+ 	</div>
+ 	<div>
+-		<label>Active: </label><input type="checkbox" value={{employee.status}}/>
++		<label>Active: </label><input type="checkbox" class="form-control" disabled id="status" required [(ngModel)]="employee.status" name="status">
+ 	</div>
+-	<div class="form-group">
+-		<label for="status">Active</label> <input type="checkbox"
+-			class="form-control" id="status" required [(ngModel)]="employee.status"
+-			name="status">
+-	</div>
+-	<span class="button is-small btn-primary" *ngIf='employee.status' (click)='updateStatus(false)'>Inactive</span>
+-
+-	<span class="button is-small btn-primary" *ngIf='!employee.status' (click)='updateStatus(true)'>Active</span>
+-
+-	<span class="button is-small btn-danger" (click)='deleteEmployee()'>Delete</span>
+-
++   </div>
++   <div id="editMode">
++		<create-employee [mode]='2' [employee]='employee' (toUpdate)="update($event)" *ngIf="isEditMode"></create-employee>
++   </div>	
++	<a class="btn btn-primary active" (click)='editToggle()' *ngIf="!isEditMode" role="button">edit</a>
++	<a class="btn btn-primary active" (click)='editToggle()' *ngIf="isEditMode" role="button">cancel</a>
++	<!--	<a routerLink="edit" class="btn btn-primary active" role="button" routerLinkActive="active">Edit</a> !-->
++	<a class="btn btn-primary disabled" (click)='update()' role="button">Update</a>
++	<a class="btn btn-danger active" (click)='delete()' role="button">Delete</a>
+ 	<hr/>
+ </div>
+\ No newline at end of file
+diff --git a/src/app/employees/employee-details/employee-details.component.ts b/src/app/employees/employee-details/employee-details.component.ts
+index 71688c3..74f1908 100644
+--- a/src/app/employees/employee-details/employee-details.component.ts
++++ b/src/app/employees/employee-details/employee-details.component.ts
+@@ -14,33 +14,45 @@ import { EmployeeMappingUtil } from '../employeeMappingUtil';
+ export class EmployeeDetailsComponent implements OnInit {
+ 
+   @Input() employee: any;
++  isEditMode:boolean = false;
+ 
+   constructor(private employeeService: EmployeeService, private listComponent: EmployeesListComponent) { 
+-    console.log("emp",this.employee);
++
+   }
+   ngOnInit() {
+-    console.log("ngOnInit");
+     this.employee = EmployeeMappingUtil.getViewModelFromModel(this.employee);
+   }
+-
+-  updateStatus(isActive: boolean) {
++  editToggle(){   
++      this.isEditMode = this.isEditMode?false:true;
++      this.employee = EmployeeMappingUtil.getViewModelFromModel(this.employee);
++  }
++  update(employee) {
++    if(employee!=null){
++      this.employee = employee;
++    }
+     this.employeeService.updateEmployee(this.employee.id,
+-      { 
+-        firstName: this.employee.firstName,
+-        lastName: this.employee.lastName,
+-        middleInitial: this.employee.middleInitial,
+-        dateOfBirth: this.employee.dateOfBirth,
+-        dateOfEmployment: this.employee.dateOfEmployment,
+-        status: isActive
+-      }).subscribe(
++      EmployeeMappingUtil.getModelFromViewModel(this.employee)).subscribe(
+       data => {
+         console.log(data);
+         this.employee = data as Employee;
+       },
+       error => console.log(error));
+   }
+-
+-  deleteEmployee() {
++  delete(){
++    this.deleteByUpdateStatus();
++  }
++  private deleteByUpdateStatus() {  
++    this.employeeService.deleteByDeactivateEmployee(this.employee.id)
++    .subscribe(
++      data => {
++        console.log(data);
++        //this.employee = data as Employee;
++        this.employee = null;
++      },
++      error => console.log(error));
++  }
++  
++  deleteActual() {
+     this.employeeService.deleteEmployee(this.employee.id)
+       .subscribe(
+       data => {
+diff --git a/src/app/employees/employee.service.ts b/src/app/employees/employee.service.ts
+index 6c1bb5f..63c26e1 100644
+--- a/src/app/employees/employee.service.ts
++++ b/src/app/employees/employee.service.ts
+@@ -27,6 +27,10 @@ export class EmployeeService {
+     return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'text' });
+   }
+ 
++  deleteByDeactivateEmployee(id: string): Observable<any> {
++    return this.http.delete(`${this.baseUrl}/${id}`, { responseType: 'json' });
++  }
++
+   getEmployeesList(all:boolean): Observable<any> {
+     if(all)
+       return this.http.get(`${this.baseUrl}` + '/all');
+diff --git a/src/app/employees/employees-list/employees-list.component.ts b/src/app/employees/employees-list/employees-list.component.ts
+index f56677e..98f79fd 100644
+--- a/src/app/employees/employees-list/employees-list.component.ts
++++ b/src/app/employees/employees-list/employees-list.component.ts
+@@ -23,7 +23,7 @@ export class EmployeesListComponent implements OnInit {
+   ngOnInit() {
+     this.reloadData();
+   }
+-
++  
+   deleteEmployees() {
+     this.employeeService.deleteAll()
+       .subscribe(
+diff --git a/src/index.html b/src/index.html
+index 623db92..655f679 100644
+--- a/src/index.html
++++ b/src/index.html
+@@ -2,7 +2,7 @@
+ <html lang="en">
+ <head>
+   <meta charset="utf-8">
+-  <title>Angular4MongoDB</title>
++  <title>Employee Management System</title>
+   <base href="/">
+ 
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+-- 
+2.14.1.windows.1
+
