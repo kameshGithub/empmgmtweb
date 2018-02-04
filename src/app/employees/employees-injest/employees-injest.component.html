@@ -1,0 +1,11 @@
+<div id="search">
+	<div id="detailsMode" *ngIf="!employee">
+		<form (ngSubmit)="onSubmit()" style="width: 300px;">
+			<div class="form-group">
+				<label for="file">Choose File</label>
+				<input type="file" id="file" (change)="handleFileInput($event.target.files)">
+			</div>
+			<button type="submit" class="btn btn-success">Submit</button>
+		</form>
+	</div>
+</div>

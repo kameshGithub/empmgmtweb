@@ -12,6 +12,7 @@ import { CreateEmployeeComponent } from './employees/create-employee/create-empl
 import { EmployeeSearchComponent } from './employees/employee-search/employee-search.component';
 
 import { EmployeeService } from './employees/employee.service';
+import { EmployeesInjestComponent } from './employees/employees-injest/employees-injest.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { EmployeeService } from './employees/employee.service';
     EmployeesListComponent,
     EmployeeDetailsComponent,
     CreateEmployeeComponent,
-    EmployeeSearchComponent
+    EmployeeSearchComponent,
+    EmployeesInjestComponent
   ],
   imports: [
     BrowserModule,
