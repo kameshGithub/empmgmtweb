@@ -1,9 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 import { EmployeeService } from '../employee.service';
 import { Employee } from '../employee';
+import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
 
-import { EmployeesListComponent } from '../employees-list/employees-list.component';
 import { EmployeeMappingUtil } from '../employeeMappingUtil';
 
 @Component({
@@ -13,18 +13,27 @@ import { EmployeeMappingUtil } from '../employeeMappingUtil';
 })
 export class EmployeeDetailsComponent implements OnInit {
 
-  @Input() employee: any;
+  message: string;
+  private employeeId: string;
+  @Input() employee: Employee = null;
+  @Output() onDelete = new EventEmitter<boolean>();
   isEditMode:boolean = false;
-
-  constructor(private employeeService: EmployeeService, private listComponent: EmployeesListComponent) { 
-
+  isSearch:boolean = false;
+ 
+  constructor(private employeeService: EmployeeService,  router:Router, route:ActivatedRoute) {   
+      this.employeeId = route.snapshot.paramMap.get('id');
+      if(this.employeeId!=null){
+        this.searchEmployee();
+      }
   }
   
   /**
    * TO set the passed in object on initialization in edit mode
    */
   ngOnInit() {
-    this.employee = EmployeeMappingUtil.formateData(this.employee);
+    if(this.employee!=null){
+      this.employee = EmployeeMappingUtil.formateData(this.employee);
+    }
   }
   /**
    * To change the mode from edit-create-cancel
@@ -49,25 +58,44 @@ export class EmployeeDetailsComponent implements OnInit {
   delete(){
     this.deleteByUpdateStatus();
   }
-  private deleteByUpdateStatus() {  
+  private deleteByUpdateStatus() {
     this.employeeService.deleteByDeactivateEmployee(this.employee.id)
     .subscribe(
       data => {
-        console.log(data);
+        //console.log(data);
         //this.employee = data as Employee;
         this.employee = null;
+        this.onDelete.emit(true);
       },
       error => console.log(error));
   }
-  
-  deleteActual() {
-    this.employeeService.deleteEmployee(this.employee.id)
-      .subscribe(
+  /**
+   * 
+   * @param employee 
+   */
+  searchEmployee() {
+    this.employeeService.getEmployee(this.employeeId).subscribe(
       data => {
         console.log(data);
-        this.listComponent.reloadData();
+        this.employee = EmployeeMappingUtil.formateData(data as Employee);
       },
-      error => console.log(error));
+      error => { 
+        console.log(error)
+        if(error.status==404){
+          this.message = "Employee not found(InActive)!";
+        }else{
+          this.message = "Error, Getting employee!";
+        }
+      });
   }
+  // deleteActual() {
+  //   this.employeeService.deleteEmployee(this.employee.id)
+  //     .subscribe(
+  //     data => {
+  //       console.log(data);
+  //       this.listComponent.reloadData();
+  //     },
+  //     error => console.log(error));
+  // }
 
 }

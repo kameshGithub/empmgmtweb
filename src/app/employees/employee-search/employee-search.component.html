@@ -1,0 +1,16 @@
+<div id="search">
+	<div id="detailsMode" *ngIf="!employee">
+		<form (ngSubmit)="onSubmit()" style="width: 300px;">
+			<div class="form-group">
+				<label for="employeeId">Enter Id</label>
+				<input type="text" class="form-control" id="employeeId" 
+				required [(ngModel)]="employeeId" name="employeeId">
+				<label style="color:red" for="employeeId">{{message}}</label>
+			</div>			
+			<button type="submit" class="btn btn-success">Submit</button>			
+		</form>
+	</div>
+	<!-- <div id="searchResult" *ngIf="employee">
+		<employee-details [employee]='employee'></employee-details>
+	</div> -->
+</div>
