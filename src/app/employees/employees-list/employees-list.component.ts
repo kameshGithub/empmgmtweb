@@ -11,7 +11,6 @@ import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./employees-list.component.css']
 })
 export class EmployeesListComponent implements OnInit {
-
   employees: Observable<Employee[]>;
   private fetchAll : boolean = true;
   constructor(private employeeService: EmployeeService, router:Router, route:ActivatedRoute) {
@@ -36,5 +35,5 @@ export class EmployeesListComponent implements OnInit {
 
   reloadData() {
     this.employees = this.employeeService.getEmployeesList(this.fetchAll);
-  }
+  }  
 }

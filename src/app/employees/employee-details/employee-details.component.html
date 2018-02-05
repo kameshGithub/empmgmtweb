@@ -1,30 +1,70 @@
 <div id="employeeDetails">
-<div *ngIf="employee" >
-   <div id="detailsMode" *ngIf="!isEditMode">
-	<div>
-		<label>Name: </label> {{employee.firstName +' '+ employee.middleInitial + ' ' + employee.lastName}}
+	<div *ngIf="employee">
+		<div id="detailsMode" *ngIf="!isEditMode">
+			<div>
+				<label>Name: </label> {{employee.firstName +' '+ employee.middleInitial + ' ' + employee.lastName}}
+			</div>
+			<div>
+				<label>Date of Birth: </label> {{employee.dateOfBirth}}
+			</div>
+			<div>
+				<label>Date of Employment: </label> {{employee.dateOfEmployment}}
+			</div>
+			<div>
+				<label>Status: </label> {{employee.status?"Active":"Deactivated"}}
+			</div>
+		</div>
+		<div id="editMode">
+			<create-employee [mode]='2' [employee]='employee' (toUpdate)="update($event)" *ngIf="isEditMode"></create-employee>
+		</div>
+		<!-- <div id="authCapture" *ngIf="captureAuth">
+			<form>
+				<div class="form-row align-item-center alert alert-primary">
+					<div class="col-auto">
+						<input type="text" class="form-control" id="userName" required [(ngModel)]="userName" name="userName" placeholder="User Name">
+					</div>
+					<div class="col-auto">
+						<input type="text" class="form-control" id="password" required [(ngModel)]="password" name="password" placeholder="Password">
+					</div>
+
+					<div class="col-auto">
+						<button class="btn btn-primary active" mat-raised-button (click)="delete()">Confirm</button>
+						<button class="btn btn-primary active" mat-raised-button (click)="showCaptureAuth()">Cancel</button>
+					</div>
+				</div>
+			</form>
+		</div> -->
+		<a class="btn btn-primary active" (click)='editOrCancel()' *ngIf="!isEditMode" role="button">Edit</a>
+		<a class="btn btn-primary active" (click)='editOrCancel()' *ngIf="isEditMode" role="button">Cancel</a>
+		<!-- Button trigger modal -->
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#authModel">
+			Delete
+		</button>		
+		<hr/>
 	</div>
-	<div>
-		<label>Date of Birth: </label> {{employee.dateOfBirth}}
+	<!-- Modal -->
+	<div class="modal fade" id="authModel" tabindex="-1" role="dialog" aria-labelledby="authModelLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="authModelLabel">Confirm Authorization ?</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div *ngIf="message" class="alert alert-primary" role="alert">
+					{{message}}
+				</div>
+				<div class="modal-body">
+					<input type="text" id="userName" required [(ngModel)]="userName" name="userName" placeholder="User Name">
+					<input type="text" id="password" required [(ngModel)]="password" name="password" placeholder="Password">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" (click)="delete()">Confirm</button>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div>
-		<label>Date of Employment: </label> {{employee.dateOfEmployment}}		
-	</div>
-	<div>
-		<label>Status: </label> {{employee.status?"Active":"Deactivated"}} <input type="checkbox" class="form-control" disabled id="status" required [(ngModel)]="employee.status" name="status">
-	</div>
-   </div>
-   <div id="editMode">
-		<create-employee [mode]='2' [employee]='employee' (toUpdate)="update($event)" *ngIf="isEditMode"></create-employee>
-   </div>	
-	<a class="btn btn-primary active" (click)='editOrCancel()' *ngIf="!isEditMode" role="button">Edit</a>
-	<a class="btn btn-primary active" (click)='editOrCancel()' *ngIf="isEditMode" role="button">Cancel</a>
-	<!--	<a routerLink="edit" class="btn btn-primary active" role="button" routerLinkActive="active">Edit</a> 
-	<a class="btn btn-primary disabled" (click)='update()' role="button">Update</a> !-->
-	<a class="btn btn-danger active" (click)='delete()' role="button">Delete</a>
-	<hr/>
-</div>
-<div id="message" *ngIf="!employee" >
-		<label style="color:red" for="employeeId">{{message}}</label>
-</div>
 </div>

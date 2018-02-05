@@ -9,7 +9,6 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'Employee Managment Application';
   description = 'A sample application to manage employees.';
-
   constructor() { }
 
 }

@@ -11,6 +11,7 @@ import { EmployeeDetailsComponent } from './employees/employee-details/employee-
 import { CreateEmployeeComponent } from './employees/create-employee/create-employee.component';
 import { EmployeeSearchComponent } from './employees/employee-search/employee-search.component';
 
+
 import { EmployeeService } from './employees/employee.service';
 import { EmployeesInjestComponent } from './employees/employees-injest/employees-injest.component';
 import { AuthInterceptor } from './AuthIntercepter';
@@ -23,13 +24,14 @@ import { AuthInterceptor } from './AuthIntercepter';
     EmployeeDetailsComponent,
     CreateEmployeeComponent,
     EmployeeSearchComponent,
-    EmployeesInjestComponent
+    EmployeesInjestComponent,
   ],
+  entryComponents: [],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

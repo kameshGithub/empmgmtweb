@@ -30,12 +30,12 @@ export class EmployeeService {
     return this.http.delete(`${this.baseUrl + this.EMPLOYEES}/${id}`, { responseType: 'text' });
   }
 
-  deleteByDeactivateEmployee(id: string): Observable<any> {
-    let basicAuthValue = btoa("admin:admin"); //username:pass   
+  deleteByDeactivateEmployee(id: string, userName: string, password: string): Observable<any> {
+    let basicAuthValue = btoa(userName+':'+password); //username:pass   
     let headers = new HttpHeaders({'Authorization': 'Basic '+ basicAuthValue});
     return this.http.delete(`${this.baseUrl + this.EMPLOYEES}/${id}`,{ 
       headers:headers,
-      responseType: 'json'  
+      responseType: 'text'       
     });
   }
 

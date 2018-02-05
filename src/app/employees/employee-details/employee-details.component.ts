@@ -5,6 +5,9 @@ import { Employee } from '../employee';
 import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
 
 import { EmployeeMappingUtil } from '../employeeMappingUtil';
+declare var jquery:any;
+declare var $ :any;
+
 
 @Component({
   selector: 'employee-details',
@@ -12,11 +15,15 @@ import { EmployeeMappingUtil } from '../employeeMappingUtil';
   styleUrls: ['./employee-details.component.css']
 })
 export class EmployeeDetailsComponent implements OnInit {
-
+  
+  userName: any;
+  password: any;
+  captureAuth: boolean = false;
   message: string;
   private employeeId: string;
   @Input() employee: Employee = null;
   @Output() onDelete = new EventEmitter<boolean>();
+  @Output() onAboutDelete = new EventEmitter<boolean>();
   isEditMode:boolean = false;
   isSearch:boolean = false;
  
@@ -56,18 +63,26 @@ export class EmployeeDetailsComponent implements OnInit {
   }
   /** Delete employee by changing the status from ACTIVE to INACTIVE */
   delete(){
-    this.deleteByUpdateStatus();
+    this.message=null;    
+    if(this.userName && this.password){
+      this.deleteByUpdateStatus();       
+      //this.captureAuth = false;
+    }else{
+      this.message="Please provide user/pass!";
+    }
   }
   private deleteByUpdateStatus() {
-    this.employeeService.deleteByDeactivateEmployee(this.employee.id)
+    this.employeeService.deleteByDeactivateEmployee(this.employee.id, this.userName, this.password)
     .subscribe(
       data => {
-        //console.log(data);
-        //this.employee = data as Employee;
         this.employee = null;
-        this.onDelete.emit(true);
+        this.message="Employee deleted successfully!!!";  
+        $('#authModal').modal('toggle');
+        this.onDelete.emit(true);      
+      }, error => { 
+        console.log(error);
+        this.message="Could not delete employee!!!";
       });
-      //, error => console.log(error));
   }
   /**
    * 
@@ -82,12 +97,20 @@ export class EmployeeDetailsComponent implements OnInit {
       error => { 
         console.log(error)
         if(error.status==404){
-          this.message = "Employee not found(InActive)!";
+          this.message = "Employee not found or InActive!";
         }else{
           this.message = "Error, Getting employee!";
         }
       });
   }
+  showCaptureAuth(){
+    this.captureAuth = this.captureAuth?false:true;
+    this.message=null; 
+   
+    //this.onAboutDelete.emit(true);
+  }
+    
+  
   // deleteActual() {
   //   this.employeeService.deleteEmployee(this.employee.id)
   //     .subscribe(

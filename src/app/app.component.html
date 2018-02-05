@@ -1,4 +1,5 @@
-<div class="container-fluid">
+<div class="container">
+	<div class="starter-template">
 	<div style="color: blue;">
 		<h1>{{title}}</h1>
 		<h3>{{description}}</h3>
@@ -10,10 +11,10 @@
 		<a routerLink="employees" class="btn btn-primary active" role="button" routerLinkActive="active">Employees</a>
 		<a routerLink="add" class="btn btn-primary active" role="button" routerLinkActive="active">Add</a>
 		<a routerLink="search" class="btn btn-primary active" role="button" routerLinkActive="active">Search by ID</a>
-	
 	</nav>
 	<router-outlet></router-outlet>
 	<router-outlet name="results"></router-outlet>
+	</div>
 </div>
 
 
