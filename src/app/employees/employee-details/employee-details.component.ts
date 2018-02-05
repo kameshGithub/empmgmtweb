@@ -66,8 +66,8 @@ export class EmployeeDetailsComponent implements OnInit {
         //this.employee = data as Employee;
         this.employee = null;
         this.onDelete.emit(true);
-      },
-      error => console.log(error));
+      });
+      //, error => console.log(error));
   }
   /**
    * 

@@ -5,9 +5,9 @@ import { Observable } from 'rxjs/observable';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   intercept (req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    //let headers = new Headers({'content-language': 'en' }); 
-    //headers.set("Authorization","Basic dXNlcjp1c2Vy");
-    const authReq = req.clone({headers: req.headers.set('Authorization', 'Basic dXNlcjp1c2Vy')});
-    return next.handle(authReq);
+    // let basicAuthValue = btoa("admin:admin"); //username:pass    
+    // const authReq = req.clone({headers: req.headers.set('Authorization', 'Basic '+ basicAuthValue)});
+    // return next.handle(authReq);
+    return next.handle(req);    
   }
 }

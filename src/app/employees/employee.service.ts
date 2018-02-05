@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpRequest, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 
 import { Employee } from './employee';
@@ -31,7 +31,12 @@ export class EmployeeService {
   }
 
   deleteByDeactivateEmployee(id: string): Observable<any> {
-    return this.http.delete(`${this.baseUrl + this.EMPLOYEES}/${id}`, { responseType: 'json' });
+    let basicAuthValue = btoa("admin:admin"); //username:pass   
+    let headers = new HttpHeaders({'Authorization': 'Basic '+ basicAuthValue});
+    return this.http.delete(`${this.baseUrl + this.EMPLOYEES}/${id}`,{ 
+      headers:headers,
+      responseType: 'json'  
+    });
   }
 
   getEmployeesList(all: boolean): Observable<any> {
