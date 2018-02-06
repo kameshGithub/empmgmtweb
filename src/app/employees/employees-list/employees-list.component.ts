@@ -13,6 +13,7 @@ import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
 export class EmployeesListComponent implements OnInit {
   employees: Observable<Employee[]>;
   private fetchAll : boolean = true;
+ 
   constructor(private employeeService: EmployeeService, router:Router, route:ActivatedRoute) {
     router.events.forEach(e => {
         this.fetchAll = route.root.firstChild.snapshot.data['fetchAll'];

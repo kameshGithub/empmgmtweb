@@ -14,7 +14,7 @@ export class EmployeesInjestComponent implements OnInit {
 
   fileToUpload: File;
   private message: string;
- 
+  enableNavigation:boolean = false;
   constructor(private router: Router,private employeeService: EmployeeService) {
 
   }
@@ -31,15 +31,15 @@ export class EmployeesInjestComponent implements OnInit {
       return;
     }    
     this.uploadFileToActivity();
-    //this.router.navigate(['/employees',this.employeeId]);  
+    this.enableNavigation = true;
+    //this.router.navigate(['/employees']);  
   }
   handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
   }
   uploadFileToActivity() {
    this.employeeService.postFile(this.fileToUpload).subscribe(data => {
-    // do something, if upload success
-      console.log("data:",data);
+    this.message = data["message"];
     }, error => {
       console.log(error);
     });

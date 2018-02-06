@@ -1,11 +1,12 @@
-<div id="search">
-	<div id="detailsMode" *ngIf="!employee">
-		<form (ngSubmit)="onSubmit()" style="width: 300px;">
-			<div class="form-group">
-				<label for="file">Choose File</label>
-				<input type="file" id="file" (change)="handleFileInput($event.target.files)">
-			</div>
-			<button type="submit" class="btn btn-success">Submit</button>
-		</form>
-	</div>
+<div id="search" class="row align-items-center">
+	<form (ngSubmit)="onSubmit()" style="width:100%">
+		<h3>Injest Employees</h3>
+		<div class="form-group">
+			<label for="file">Choose File</label>
+			<input type="file" id="file" (change)="handleFileInput($event.target.files)">
+		</div>
+		<label>{{message}}</label>
+		<a routerLink="/employees" class="btn btn-primary active" role="button" routerLinkActive="active" *ngIf="enableNavigation">View Employees</a>
+		<button type="submit" class="btn btn-success">Submit</button>
+	</form>
 </div>

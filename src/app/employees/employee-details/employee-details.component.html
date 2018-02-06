@@ -1,53 +1,68 @@
-<div id="employeeDetails">
-	<div *ngIf="employee">
-		<div id="detailsMode" *ngIf="!isEditMode">
-			<div>
-				<label>Name: </label> {{employee.firstName +' '+ employee.middleInitial + ' ' + employee.lastName}}
-			</div>
-			<div>
-				<label>Date of Birth: </label> {{employee.dateOfBirth}}
-			</div>
-			<div>
-				<label>Date of Employment: </label> {{employee.dateOfEmployment}}
-			</div>
-			<div>
-				<label>Status: </label> {{employee.status?"Active":"Deactivated"}}
-			</div>
-		</div>
+<div class="row  align-items-start">
+	<!-- <div *ngIf="employee">
+			<div id="detailsMode" *ngIf="!isEditMode"> -->
+	<div class="col-3 left">
+		{{employee.id}}
+	</div>
+	<div class="col-3 left">
+		{{employee.firstName +' '+ employee.middleInitial + ' ' + employee.lastName}}
+	</div>
+	<div class="col-2 left">
+		{{employee.dateOfBirth}}
+	</div>
+	<div class="col-2 left">
+		{{employee.dateOfEmployment}}
+	</div>
+	<!-- <div class="col-1">
+		{{employee.status}}
+	</div> -->
+	<div class="col-2 left">
+		<!--
 		<div id="editMode">
 			<create-employee [mode]='2' [employee]='employee' (toUpdate)="update($event)" *ngIf="isEditMode"></create-employee>
 		</div>
-		<!-- <div id="authCapture" *ngIf="captureAuth">
-			<form>
-				<div class="form-row align-item-center alert alert-primary">
-					<div class="col-auto">
-						<input type="text" class="form-control" id="userName" required [(ngModel)]="userName" name="userName" placeholder="User Name">
-					</div>
-					<div class="col-auto">
-						<input type="text" class="form-control" id="password" required [(ngModel)]="password" name="password" placeholder="Password">
-					</div>
-
-					<div class="col-auto">
-						<button class="btn btn-primary active" mat-raised-button (click)="delete()">Confirm</button>
-						<button class="btn btn-primary active" mat-raised-button (click)="showCaptureAuth()">Cancel</button>
-					</div>
-				</div>
-			</form>
-		</div> -->
-		<a class="btn btn-primary active" (click)='editOrCancel()' *ngIf="!isEditMode" role="button">Edit</a>
+		 <a class="btn btn-primary active" (click)='editOrCancel()' *ngIf="!isEditMode" role="button">Edit</a> -->
 		<a class="btn btn-primary active" (click)='editOrCancel()' *ngIf="isEditMode" role="button">Cancel</a>
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModel">
+			Edit
+		</button>
 		<!-- Button trigger modal -->
 		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#authModel">
 			Delete
-		</button>		
-		<hr/>
+		</button>
 	</div>
-	<!-- Modal -->
+	<!-- </div>
+	</div> -->
+	<!-- Edit Employee Modal -->
+	<div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="editModel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="editModelLabel">Edit Employee</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div *ngIf="message" class="alert alert-primary" role="alert">
+					{{message}}
+				</div>
+				<div id="editMode" class="modal-body">
+					<create-employee [mode]='2' [employee]='employee' (toUpdate)="update($event)"></create-employee>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" (click)="delete()">Confirm</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Capture Authorization Modal -->
 	<div class="modal fade" id="authModel" tabindex="-1" role="dialog" aria-labelledby="authModelLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="authModelLabel">Confirm Authorization ?</h5>
+					<h5 class="modal-title" id="authModelLabel">Confirm Authorization</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>

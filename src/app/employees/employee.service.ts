@@ -47,11 +47,10 @@ export class EmployeeService {
   }
 
   deleteAll(): Observable<any> {
-    return this.http.delete(`${this.baseUrl + this.EMPLOYEES}`, { responseType: 'text' });
+    return this.http.delete(`${this.baseUrl + '/actual/'+ this.EMPLOYEES}`, { responseType: 'text' });
   }
 
-  postFile(fileToUpload: File) {
-    
+  postFile(fileToUpload: File) {    
     const formData: FormData = new FormData();
     formData.append('file', fileToUpload, fileToUpload.name);
     let headersConfig = null;

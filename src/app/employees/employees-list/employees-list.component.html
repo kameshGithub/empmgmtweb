@@ -1,7 +1,18 @@
-<h1>Employees</h1>
-<div *ngFor="let employee of employees | async" >
-	<employee-details (onDelete)="reloadData($event)" (onAboutDelete)="showCaptureAuth($event)" [employee]='employee'></employee-details>
+<div id="employeeList">
+	<h1>Employees</h1>
+	<div class="row align-items-start">
+		<div class="col-3 left">Id</div>
+		<div class="col-3 left">Name</div>
+		<div class="col-2 left">Date of Birth</div>
+		<div class="col-2 left">Date of Employment</div>
+		<!-- <div class="col-1">Status</div> -->
+		<div class="col-2 left">Actions</div>
+	</div>
+	<div class="row align-items-start" *ngFor="let employee of employees | async">
+		<employee-details style="width:100%" (onDelete)="reloadData($event)" (onAboutDelete)="showCaptureAuth($event)" [employee]='employee'></employee-details>
+	</div>
+	<div>
+		<button type="button" class="button btn-danger" (click)='deleteEmployees()'>Delete All</button>
+	</div>	
 </div>
-<div>
-	<button type="button" class="button btn-danger" (click)='deleteEmployees()'>Delete All</button>
-</div>
+<div *ngIf="employee">No Empoyees Found!!!</div>
