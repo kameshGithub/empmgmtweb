@@ -12,10 +12,12 @@ const routes: Routes = [
   { path: 'allemployees', component: EmployeesListComponent, data: {fetchAll:true} },
   { path: 'employees', component: EmployeesListComponent },
   { path: 'add', component: CreateEmployeeComponent },
-  { path: 'allemployees/edit', component: CreateEmployeeComponent},
+  { path: 'allemployees/edit/:id', component: CreateEmployeeComponent},
   { path: 'employees/:id', component: EmployeeDetailsComponent },  
   { path: 'search', component: EmployeeSearchComponent},
-  { path: 'injest', component: EmployeesInjestComponent}  
+  { path: 'injest', component: EmployeesInjestComponent},
+  { path: 'employees/edit/:id', component: CreateEmployeeComponent}
+  
 ];
 
 @NgModule({

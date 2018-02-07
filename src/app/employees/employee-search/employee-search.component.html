@@ -1,16 +1,29 @@
-<div id="search">
-	<div id="detailsMode" *ngIf="!employee">
-		<form (ngSubmit)="onSubmit()" style="width: 300px;">
-			<div class="form-group">
-				<label for="employeeId">Enter Id</label>
-				<input type="text" class="form-control" id="employeeId" 
-				required [(ngModel)]="employeeId" name="employeeId">
-				<label style="color:red" for="employeeId">{{message}}</label>
-			</div>			
-			<button type="submit" class="btn btn-success">Submit</button>			
-		</form>
+<div id="authModel" *ngIf="!employee">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="authModelLabel">Confirm Authorization</h5>
+				<button type="button" class="close" (click)="toggleModal()" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div *ngIf="message" class="alert alert-primary" role="alert">
+				{{message}}
+			</div>
+			<form (ngSubmit)="onSubmit()">
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="employeeId">Enter Id</label>
+						<input type="text" class="form-control" id="employeeId" required [(ngModel)]="employeeId" name="employeeId">
+						<label style="color:red" for="employeeId">{{message}}</label>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-success">Submit</button>
+					<button type="button" class="btn btn-secondary" (click)="toggleModal()">Close</button>
+
+				</div>
+			</form>
+		</div>
 	</div>
-	<!-- <div id="searchResult" *ngIf="employee">
-		<employee-details [employee]='employee'></employee-details>
-	</div> -->
 </div>

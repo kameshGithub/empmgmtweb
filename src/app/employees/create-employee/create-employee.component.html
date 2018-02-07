@@ -1,46 +1,53 @@
-<div id="createOrEditEmployee" [hidden]="mode==3">
-	<h3 [hidden]="mode==2">Add Employee</h3>
+<div id="createOrEditEmployee">	
+	<h3>{{title}}</h3>
 	<div [hidden]="submitted">
 		<form (ngSubmit)="onSubmit()">
 			<div class="form-group row">
 				<label for="firstName" class="col-sm-3 col-form-label">First Name</label>
-				<div class="col-sm-9">
-
+				<div class="col col-sm-9">
 					<input type="text" class="form-control" id="firstName" required [(ngModel)]="employee.firstName" name="firstName" placeholder="Enter First Name">
 				</div>
 				<label for="middleInitial" class="col-sm-3 col-form-label">Middle Initial</label>
-				<div class="col-sm-9">
-
+				<div class="col col-sm-9">
 					<input type="text" class="form-control" id="middleInitial" required [(ngModel)]="employee.middleInitial" name="middleInitial"
 					 placeholder="Enter Middle Initials">
 				</div>
 				<label for="lastName" class="col-sm-3 col-form-label">Last Name</label>
-				<div class="col-sm-9">
-
+				<div class="col col-sm-9">
 					<input type="text" class="form-control" id="lastName" required [(ngModel)]="employee.lastName" name="lastName" placeholder="Enter Last Name">
 				</div>
 			</div>
 
 			<div class="form-group row">
 				<label for="dateOfBirth" class="col-sm-3 col-form-label">Date of Birth</label>
-				<div class="col-sm-9">
-
-					<input type="date" class="form-control" id="dateOfBirth" required [(ngModel)]="employee.dateOfBirth" name="dateOfBirth" value="{{employee.dateOfBirth}}">
-				</div>
-				<label for="dateOfEmployment" class="col-sm-3 col-form-label">Date Of Employement</label>
-				<div class="col-sm-9">
-
+				<div class="col col-sm-9 row">
+					<form id="datecheck" action="#">
+						<div class="col">
+							<input type="number" name="day" class="form-control" placeholder="DD" title="DD" required pattern="[0-3][0-9]" [(ngModel)]="employee.day">
+						</div>
+						<div class="col">
+							<input type="number" name="year" class="form-control" placeholder="YYYY" title="YYYY" required pattern="[1-2][0-9]\d{2}"
+							 [(ngModel)]="employee.year">
+						</div>
+						<div class="col">
+							<input id="checkDate" type="submit">
+						</div>
+					</form>
+				</div>			
+			    <label for="dateOfEmployment" class="col-sm-3 col-form-label">Date Of Employement</label>
+				<div class="col col-sm-9">
 					<input type="date" class="form-control" id="dateOfEmployment" required [(ngModel)]="employee.dateOfEmployment" name="dateOfEmployment"
-					 value={{employee.dateOfEmployment}}>
+				 value={{employee.dateOfEmployment}}>
 				</div>
-			</div>
-			<button type="submit" *ngIf='mode==2' class="btn btn-success">Update</button>
-			<button type="submit" *ngIf='mode==1' class="btn btn-success">Submit</button>
-			<button type="button" *ngIf='mode==1' class="btn btn-primary" (click)="cancel()">Cancel</button>
+			</div>						
+			<a routerLink="employees" *ngIf='submitted' class="btn btn-primary active" role="button" routerLinkActive="active">Employees</a>
+			<button type="button"  class="btn btn-secondary" (click)="cancel()">Cancel</button>
+			<button type="submit"  class="btn btn-primary">Confirm</button>
 		</form>
 	</div>
-	<div [hidden]="!submitted" *ngIf='mode==1'>
-		<h4>You submitted successfully!</h4>
-		<button class="btn btn-success" (click)="newEmployee()">Add</button>
-	</div>
+</div>
+<div [hidden]="!submitted">
+		<h4>{{message}}</h4>
+		<button *ngIf='mode==1' class="btn btn-success" (click)="newEmployee()">Add More</button>
+		<a routerLink="/employees" class="btn btn-primary active" role="button" routerLinkActive="active">Go to See Details</a>
 </div>

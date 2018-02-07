@@ -1,0 +1,9 @@
+input:valid {
+    color: green;
+  }
+  input:invalid {
+    color: red;
+  }
+  .col{
+      margin-bottom: 3px;
+  }

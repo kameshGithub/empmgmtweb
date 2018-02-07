@@ -7,13 +7,18 @@ import { Employee } from './employee';
 @Injectable()
 export class EmployeeService {
 
-
+  private employee:Employee=null;
   private baseUrl = 'http://localhost:8080/api/';
   private EMPLOYEES = 'employees';
   private EMPLOYEE = 'employee';  // used for create employee only
 
   constructor(private http: HttpClient) { }
-
+  getCommonEmployee(){
+    return this.employee;
+  }
+  setCommonEmployee(employee){
+    this.employee =  employee;
+  }
   getEmployee(id: string): Observable<Object> {
     return this.http.get(`${this.baseUrl + this.EMPLOYEES}/${id}`);
   }

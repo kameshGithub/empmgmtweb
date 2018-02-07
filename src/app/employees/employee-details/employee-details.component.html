@@ -1,8 +1,9 @@
-<div class="row  align-items-start">
+<div class="row  align-items-start" *ngIf="employee">
+
 	<!-- <div *ngIf="employee">
 			<div id="detailsMode" *ngIf="!isEditMode"> -->
 	<div class="col-3 left">
-		{{employee.id}}
+		{{employee.employeeId}}
 	</div>
 	<div class="col-3 left">
 		{{employee.firstName +' '+ employee.middleInitial + ' ' + employee.lastName}}
@@ -17,69 +18,46 @@
 		{{employee.status}}
 	</div> -->
 	<div class="col-2 left">
-		<!--
 		<div id="editMode">
 			<create-employee [mode]='2' [employee]='employee' (toUpdate)="update($event)" *ngIf="isEditMode"></create-employee>
 		</div>
-		 <a class="btn btn-primary active" (click)='editOrCancel()' *ngIf="!isEditMode" role="button">Edit</a> -->
-		<a class="btn btn-primary active" (click)='editOrCancel()' *ngIf="isEditMode" role="button">Cancel</a>
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModel">
-			Edit
-		</button>
+		<!-- <a class="btn btn-primary active" (click)='editOrCancel(employee)' *ngIf="!isEditMode" role="button">Edit</a>
+		<a class="btn btn-primary active" (click)='editOrCancel(employee)' *ngIf="isSearch" role="button">Cancel</a> -->
+		<a class="btn btn-primary active" (click)='toggleEditOrCancel()' role="button">{{editOrCancel}}</a> 
 		<!-- Button trigger modal -->
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#authModel">
+		<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-whatever=employee.id data-target="#authModel">
 			Delete
+		</button> -->
+		<button type="button" class="btn btn-primary" data-toggle="modal" (click)="toggleModal()">
+			{{deleteOrCancel}}
 		</button>
+		
 	</div>
-	<!-- </div>
-	</div> -->
-	<!-- Edit Employee Modal -->
-	<div class="modal fade" id="editModel" tabindex="-1" role="dialog" aria-labelledby="editModel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="editModelLabel">Edit Employee</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-
-				<div *ngIf="message" class="alert alert-primary" role="alert">
-					{{message}}
-				</div>
-				<div id="editMode" class="modal-body">
-					<create-employee [mode]='2' [employee]='employee' (toUpdate)="update($event)"></create-employee>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" (click)="delete()">Confirm</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Capture Authorization Modal -->
-	<div class="modal fade" id="authModel" tabindex="-1" role="dialog" aria-labelledby="authModelLabel" aria-hidden="true">
+</div>
+<!-- Capture Authorization Modal -->
+<div id="authModel" *ngIf="captureAuth" tabindex="-1" role="dialog" aria-labelledby="authModelLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="authModelLabel">Confirm Authorization</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close" (click)="toggleModal()" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-
 				<div *ngIf="message" class="alert alert-primary" role="alert">
 					{{message}}
 				</div>
-				<div class="modal-body">
+				<div class="modal-body">					
 					<input type="text" id="userName" required [(ngModel)]="userName" name="userName" placeholder="User Name">
 					<input type="text" id="password" required [(ngModel)]="password" name="password" placeholder="Password">
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-secondary" (click)="toggleModal()">Close</button>
 					<button type="button" class="btn btn-primary" (click)="delete()">Confirm</button>
 				</div>
 			</div>
 		</div>
 	</div>
+<div *ngIf="message" class="alert alert-primary" role="alert">
+	{{message}}
 </div>

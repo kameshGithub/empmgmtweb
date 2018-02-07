@@ -32,4 +32,7 @@ export class EmployeeSearchComponent implements OnInit {
     }    
     this.router.navigate(['/employees',this.employeeId]);   
   }  
+  toggleModal(){
+    this.router.navigate(['/employees']);   
+  }
 }
