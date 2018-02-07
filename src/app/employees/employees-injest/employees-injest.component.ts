@@ -13,7 +13,7 @@ import { EmployeeMappingUtil } from '../employeeMappingUtil';
 export class EmployeesInjestComponent implements OnInit {
 
   fileToUpload: File;
-  private message: string;
+  message: string;
   enableNavigation:boolean = false;
   constructor(private router: Router,private employeeService: EmployeeService) {
 
