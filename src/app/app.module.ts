@@ -14,7 +14,7 @@ import { EmployeeSearchComponent } from './employees/employee-search/employee-se
 
 import { EmployeeService } from './employees/employee.service';
 import { EmployeesInjestComponent } from './employees/employees-injest/employees-injest.component';
-import { AuthInterceptor } from './AuthIntercepter';
+//import { AuthInterceptor } from './AuthIntercepter';
 
 
 @NgModule({
@@ -33,11 +33,13 @@ import { AuthInterceptor } from './AuthIntercepter';
     AppRoutingModule,
     HttpClientModule,
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    useClass: AuthInterceptor,
-    multi: true
-  },EmployeeService],
+  // providers: [{
+  //   provide: HTTP_INTERCEPTORS,
+  //   useClass: AuthInterceptor,
+  //   multi: true
+  // },EmployeeService],
+  providers: [
+    EmployeeService],
   bootstrap: [AppComponent]
 })
 
