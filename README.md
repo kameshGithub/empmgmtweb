@@ -15,12 +15,12 @@ DELETE api/actual/Employees        -Delete all the employees from DB
 POST api/employees/Injest          -Bulk create list of employees from a file
 
 ## Functionality supported
-###Employee Injest: 
+### Employee Injest: 
 To import list of employees from the pre-filled csv formatted file. 
 Steps:
  1. Click on button "Employee Injest"
  2. Browse the pre-filled comma (,) separated file as per below format
- 3. The CSV format is: 
+ 3. The CSV format is described below. Click Here to get Template [a link](https://github.com/kameshGithub/empmgmtweb/blob/master/Employees.csv)
 ```
 EmpID, First Name, Middle Initial, Last Name, Date of Birth(YYYY-DD), Date of Employment(YYYY-MM-DD)
 ```
@@ -45,7 +45,11 @@ Enable adding employee entry one by one.
 ### Edit
 Edit uses a PUT method to update the details of the employee. User will not be displayed the "Status" field and also not able to change the same.
 ## Running
-Open the deployed link: [https://empmgmtweb.herokuapp.com/]
+Open the live heroku link of GUI: [https://empmgmtweb.herokuapp.com/]
+Open the ReST Server link on Heroku: [https://empmgmt.herokuapp.com/]
+Mongo DB link on Heroku: [https://www.mlab.com/databases/heroku_qzf0zdjp/collections/employee]
+
+
 
 
 
