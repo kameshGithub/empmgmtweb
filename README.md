@@ -4,15 +4,15 @@ The technology stack.
 Angular 4, Spring-Boot, MongoDB, bootstrap
 Front end and back-end are two applications.
 ## ReST Services
-GET  api/employees/all             -Gets all employess status=active + inactive
-GET  api/employees                 -Gets all the active employees
-GET  api/employees/{id}            -Gets a single active employee
-POST api/employee                  -Create a new employee
-PUT  api/employees/{id}            -Update an employee
-DELETE api/employees/{id}          -Delete an employee (by status=inactive)
-DELETE api/actual/employees/{id}   -Delete an employee from DB
-DELETE api/actual/Employees        -Delete all the employees from DB
-POST api/employees/Injest          -Bulk create list of employees from a file
+1. GET  api/employees/all             -Gets all employess status=active + inactive
+2. GET  api/employees                 -Gets all the active employees
+3. GET  api/employees/{id}            -Gets a single active employee
+4. POST api/employee                  -Create a new employee
+5. PUT  api/employees/{id}            -Update an employee
+6. DELETE api/employees/{id}          -Delete an employee (by status=inactive)
+7. DELETE api/actual/employees/{id}   -Delete an employee from DB
+8. DELETE api/actual/Employees        -Delete all the employees from DB
+9. POST api/employees/Injest          -Bulk create list of employees from a file
 
 ## Functionality supported
 ### Employee Injest: 
