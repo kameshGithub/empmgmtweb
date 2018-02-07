@@ -44,10 +44,53 @@ Enable adding employee entry one by one.
 
 ### Edit
 Edit uses a PUT method to update the details of the employee. User will not be displayed the "Status" field and also not able to change the same.
-## Running
-Open the live heroku link of GUI: [https://empmgmtweb.herokuapp.com/]
-Open the ReST Server link on Heroku: [https://empmgmt.herokuapp.com/]
-Mongo DB link on Heroku: [https://www.mlab.com/databases/heroku_qzf0zdjp/collections/employee]
+## Build from source
+### Mongo DB
+1. Start the mongo db
+2. Get the monogo db related setting to update in the application
+
+### GUI Application
+1. Copy source
+```sh
+mkdir fe
+cd fe
+git clone https://github.com/kameshGithub/empmgmtweb.git
+```
+2. Edit files
+```
+1. Open .\src\app\employees\employee.service.ts  and go to line 12 to update the name of the server:port of the ReST server that you are running
+```
+3. Build/Run
+```
+npm run build
+npm start 
+```
+4. The server will be launched at http://localhost:8080/
+
+### ReST Application
+1. Copy source
+```sh
+mkdir be
+cd be
+git clone https://github.com/kameshGithub/empmgmt.git
+```
+2. Till the external configuration or proxy/gateway/service discovery feature is implemented, below manual configuration is required.
+```
+1. Go to .\src\main\java\com\kamesh\empmgmt\employee\controller\EmployeeController.java
+2. Go to Line 46, and replace the URL of your Front-end application. 
+3. Go to .\src\main\resources\application.properties  and change the required settings e.g. mongo db related.
+```
+3. If you already have one, change the configuration accordingly.
+```
+mvn compile
+mvn spring:boot run
+```
+4. The server will be launched at http://localhost:5000/
+
+## Live application access
+1. Open the live heroku link of GUI: https://empmgmtweb.herokuapp.com/
+2. Open the ReST Server link on Heroku: https://empmgmt.herokuapp.com/
+3. Mongo DB link on Heroku: https://www.mlab.com/databases/heroku_qzf0zdjp/collections/employee
 
 
 
