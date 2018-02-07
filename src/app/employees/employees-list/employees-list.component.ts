@@ -34,6 +34,6 @@ export class EmployeesListComponent implements OnInit {
       error => console.log('ERROR: ' + error));
   }  
   reloadData() {
-    this.employees = this.employeeService.getEmployeesList(this.fetchAll);
+    this.employees = this.employeeService.getEmployeesList(this.fetchAll);    
   }  
 }
