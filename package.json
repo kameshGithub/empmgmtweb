@@ -15,7 +15,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^4.0.0",
-    "@angular/cdk": "^4.0.0",
+    "@angular/cdk": "^5.2.0",
     "@angular/common": "^4.0.0",
     "@angular/compiler": "^4.0.0",
     "@angular/core": "^4.0.0",
@@ -36,6 +36,8 @@
     "webpack": "3.10.0"
   },
   "devDependencies": {   
+    "@angular/compiler-cli": "^5.2.3",
+    "typescript": "~2.6.2",
     "@types/jasmine": "2.5.53",
     "@types/node": "~6.0.60",
     "codelyzer": "~3.0.1",
@@ -49,6 +51,7 @@
     "karma-coverage-istanbul-reporter": "^1.2.1",
     "protractor": "~5.1.2",
     "ts-node": "~3.2.0",
-    "tslint": "~5.7.2"    
+    "tslint": "~5.9.1",
+    "fs-extra": "5.0.0"    
   }
 }
