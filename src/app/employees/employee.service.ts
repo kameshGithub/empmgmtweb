@@ -8,7 +8,7 @@ import { Employee } from './employee';
 export class EmployeeService {
 
   private employee:Employee=null;
-  private baseUrl = 'http://localhost:8080/api/';
+  private baseUrl = 'https://empmgmt.herokuapp.com/api/';
   private EMPLOYEES = 'employees';
   private EMPLOYEE = 'employee';  // used for create employee only
 
