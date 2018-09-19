@@ -2,7 +2,10 @@
 	<form (ngSubmit)="onSubmit()" style="width:100%">
 		<h3>Injest Employees</h3>
 		<div class="form-group">
-			<label for="file">Choose File</label>
+			<div>
+				<label>If importing for the first time, please <a href="../../../assets/Employees.csv">Download</a> the template file and populate the data to import the same.</label>
+			</div>
+			<!-- <label for="file">Import the list</label> -->
 			<input type="file" id="file" (change)="handleFileInput($event.target.files)">
 		</div>
 		<label>{{message}}</label>
